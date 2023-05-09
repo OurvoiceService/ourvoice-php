@@ -26,7 +26,7 @@ When you do not use Composer. You can git checkout or download [this repository]
 Usage
 -----
 
-We have put some self-explanatory examples in the *examples* directory, but here is a quick breakdown on how it works. First, you need to set up a **MessageBird\Client**. Be sure to replace **YOUR_ACCESS_KEY** with something real.
+Here is a quick breakdown on how it works. First, you need to set up a **MessageBird\Client**. Be sure to replace **YOUR_ACCESS_KEY** with something real.
 
 ```php
 
@@ -49,4 +49,4 @@ Complete documentation, instructions, and examples are available at:
 
 License
 ----
-The Ourvoice REST Client for PHP is licensed under [The MIT License](https://opensource.org/license/mit-0/). Copyright (c) 2014, MessageBird
+The Ourvoice REST Client for PHP is licensed under [The MIT License](https://opensource.org/license/mit-0/). Copyright (c) 2023, Ourvoice

@@ -75,11 +75,11 @@ class Base
             $query,
             $body
         );
-        return $this->processRequest($status,$body);
+        return $this->processRequest($status, $body);
     }
 
 
-    public function processRequest(?string $status,?string $body)
+    public function processRequest(?string $status, ?string $body)
     {
         if ($body === null) {
             throw new Exceptions\ServerException('Got an invalid JSON response from the server.');
@@ -87,7 +87,6 @@ class Base
         else {
             try {
                 $body = json_decode($body, null, 512, \JSON_THROW_ON_ERROR);
-                var_dump($status);
                 switch ($status){
                     case '201':
                     case '200':
@@ -107,7 +106,7 @@ class Base
                         return $this->object->loadFromStdclass($body);
                         break;
                     default:
-                        $responseError = new Common\ResponseError($status,$body->data);
+                        $responseError = new Common\ResponseError($status, $body->data);
                         throw new Exceptions\RequestException($responseError->getErrorString());
                         break;
                 }
@@ -154,7 +153,7 @@ class Base
             return $baseList;
         }
 
-        return $this->processRequest($status,$body);
+        return $this->processRequest($status, $body);
     }
 
 
@@ -162,7 +161,7 @@ class Base
     {
         $resourceName = $this->resourceName . (($id) ? '/' . $id : null);
         [$status, , $body] = $this->httpClient->performHttpRequest(HttpClient::REQUEST_GET, $resourceName);
-        return $this->processRequest($status,$body);
+        return $this->processRequest($status, $body);
     }
 
 
@@ -175,7 +174,7 @@ class Base
             return true;
         }
 
-        return $this->processRequest($status,$body);
+        return $this->processRequest($status, $body);
     }
 
 
@@ -198,7 +197,7 @@ class Base
             false,
             $body
         );
-        return $this->processRequest($status,$body);
+        return $this->processRequest($status, $body);
     }
 
     public function getHttpClient(): HttpClient

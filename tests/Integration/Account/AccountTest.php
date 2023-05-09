@@ -37,9 +37,9 @@ class AccountTest extends BaseTest
     {
         $this->expectException(ServerException::class);
         $this->mockClient->expects(self::once())->method('performHttpRequest')->with("GET",
-            'accounts', ['offset' => 100, 'limit' => 30],
+            'accounts', [],
             null);
-        $this->client->account->getList(['offset' => 100, 'limit' => 30]);
+        $this->client->account->getList();
     }
 
     public function testViewAccount(): void
