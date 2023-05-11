@@ -81,7 +81,7 @@ class Base
 
     public function processRequest(?string $status, ?string $body)
     {
-        if ($body === null) {
+        if ($body === null && $status != '204' ) {
             throw new Exceptions\ServerException('Got an invalid JSON response from the server.');
         }
         else {
@@ -111,6 +111,8 @@ class Base
                         break;
                 }
             } catch (\JsonException $e) {
+                $body = json_decode($body, null, 512, \JSON_THROW_ON_ERROR);
+                var_dump($body);
                 throw new Exceptions\ServerException('Got an invalid JSON response from the server.');
             }
         }
