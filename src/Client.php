@@ -1,21 +1,20 @@
 <?php
 
-namespace Ourvoice\Sdk;
+namespace Ourvoice;
 
-use Ourvoice\Sdk\Common\HttpClient;
+use Ourvoice\Common\HttpClient;
 
 /**
  * Class Client
  *
- * @package Ourvoice\Sdk
+ * @package Ourvoice
  */
 class Client
 {
-    public const ENDPOINT = 'https://staging.getourvoice.com/api/v1/';
-    
-    const CLIENT_VERSION = '3.1.2';
+    public const ENDPOINT = 'https://staging.getourvoice.com/api/v1';
 
-    
+    const CLIENT_VERSION = '1.0.0';
+
     /**
      * @var Resources\Contacts
      */
@@ -24,101 +23,94 @@ class Client
      * @var Resources\Groups
      */
     public $groups;
-     /**
+    /**
      * @var Resources\Account
      */
-    public $accounts;
+    public $account;
 
     /**
-     * @var Resources\Role
+     * @var Resources\Flows
      */
-    public $roles;
+    public $flows;
 
     /**
-     * @var Resources\Action
-     */
-    public $actions;
-    
-    /**
-     * @var Resources\Condition
-     */
-    public $conditions;
-
-    /**
-     * @var Resources\ActionCondition
-     */
-    public $action_conditions;
-
-    /**
-     * @var Resources\ApiKey
-     */
-    public $apikeys;
-    
-    /**
-     * @var Resources\Campaign
+     * @var Resources\Campaigns
      */
     public $campaigns;
 
     /**
-     * @var Resources\Invitation
-     */
-    public $invitations;
-
-    /**
-     * @var Resources\Media
+     * @var Resources\Medias
      */
     public $medias;
 
     /**
-     * @var Resources\Message
+     * @var Resources\Messages
      */
     public $messages;
 
-
-      /**
-     * @var Resources\User
+    /**
+     * @var Resources\Webhooks
      */
-    public $users;
-    
+    public $webhooks;
+
+    /**
+     * @var Resources\Numbers
+     */
+    public $numbers;
+
+    /**
+     * @var Resources\Steps
+     */
+    public $steps;
+
+    /**
+     * @var Resources\Subscriptions
+     */
+    public $subscriptions;
+
+    /**
+     * @var Resources\Voices
+     */
+    public $voices;
+
     protected $endpoint = self::ENDPOINT;
     /**
      * @var Common\HttpClient
      */
     protected $httpClient;
 
-    
+
 
     public function __construct(?string $accessKey = null, Common\HttpClient $httpClient = null, array $config = [])
     {
         if ($httpClient === null) {
-           
+
             $this->httpClient = new Common\HttpClient(self::ENDPOINT);
-            
+
         } else {
-            
+
             $this->httpClient = $httpClient;
-           
+
         }
 
-        $this->httpClient->addUserAgentString('Ourvoice\Sdk/ApiClient/' . self::CLIENT_VERSION);
+        $this->httpClient->addUserAgentString('Ourvoice/ApiClient/' . self::CLIENT_VERSION);
         $this->httpClient->addUserAgentString($this->getPhpVersion());
 
         if ($accessKey !== null) {
             $this->setAccessKey($accessKey);
         }
-        $this->accounts = new Resources\Account($this->httpClient);
+        $this->account = new Resources\Account($this->httpClient);
+        $this->campaigns = new Resources\Campaigns($this->httpClient);
         $this->contacts = new Resources\Contacts($this->httpClient);
+       $this->flows = new Resources\Flows($this->httpClient);
         $this->groups = new Resources\Groups($this->httpClient);
-        $this->roles = new Resources\Role($this->httpClient);
-        $this->actions = new Resources\Action($this->httpClient);
-        $this->conditions = new Resources\Condition($this->httpClient);
-        $this->action_conditions = new Resources\ActionCondition($this->httpClient);
-        $this->apikeys = new Resources\ApiKey($this->httpClient);
-        $this->campaigns = new Resources\Campaign($this->httpClient);
-        $this->invitations = new Resources\Invitation($this->httpClient);
-        $this->medias = new Resources\Media($this->httpClient);
-        $this->messages = new Resources\Message($this->httpClient);
-        $this->users = new Resources\User($this->httpClient);
+        $this->medias = new Resources\Medias($this->httpClient);
+        $this->messages = new Resources\Messages($this->httpClient);
+        $this->numbers = new Resources\Numbers($this->httpClient);
+        $this->steps = new Resources\Steps($this->httpClient);
+        $this->subscriptions = new Resources\Subscriptions($this->httpClient);
+        $this->voices = new Resources\Voices($this->httpClient);
+        $this->webhooks = new Resources\Webhooks($this->httpClient);
     }
 
     private function getPhpVersion(): string
@@ -137,9 +129,6 @@ class Client
     public function setAccessKey($accessKey): void
     {
         $authentication = new Common\Authentication($accessKey);
-
-        
         $this->httpClient->setAuthentication($authentication);
-       
     }
 }

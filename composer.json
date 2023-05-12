@@ -1,19 +1,21 @@
 {
-    "name": "ourvoice/sdk",
+    "name": "shadonet/ourvoice-php",
     "description": "Ourvoice Api REST API client for php",
     "type": "library",
-    "license": "TIC",
+    "version": "1.0.0-dev",
+    "license": "MIT",
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "ext-curl": "*"
     },
     "autoload": {
         "psr-4": {
-            "Ourvoice\\Sdk\\": "src/"
+            "Ourvoice\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "TICABC"
+            "name": "TIC ABC"
         }
     ],
     "autoload-dev": {

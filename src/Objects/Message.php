@@ -1,9 +1,9 @@
 <?php
 
-namespace Ourvoice\Sdk\Objects;
+namespace Ourvoice\Objects;
 
 /**
- * Class Message
+ * Class Messages
  *
  * @package Ourvoice\Sdk\Objects
  */

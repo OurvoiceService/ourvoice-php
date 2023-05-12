@@ -1,9 +1,9 @@
 <?php
 
-namespace Ourvoice\Sdk\Objects;
+namespace Ourvoice\Objects;
 
 /**
- * Class Media
+ * Class Medias
  *
  * @package Ourvoice\Sdk\Objects
  */

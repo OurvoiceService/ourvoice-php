@@ -2,13 +2,13 @@
 
 namespace Tests\Integration\Campaign;
 
-use Ourvoice\Sdk\Exceptions\ServerException;
-use  Ourvoice\Sdk\Common\HttpClient;
+use Ourvoice\Exceptions\ServerException;
+use  Ourvoice\Common\HttpClient;
 use Tests\Integration\BaseTest;
-use  Ourvoice\Sdk\Objects\Campaign;
-use  Ourvoice\Sdk\Objects\Account;
-use  Ourvoice\Sdk\Objects\Group;
-use  Ourvoice\Sdk\Objects\Message;
+use  Ourvoice\Objects\Campaign;
+use  Ourvoice\Objects\Account;
+use  Ourvoice\Objects\Group;
+use  Ourvoice\Objects\Message;
 
 class CampaignTest extends BaseTest
 {
@@ -23,7 +23,7 @@ class CampaignTest extends BaseTest
         $campaign->repeat = "never";
         $campaign->start_date = "2000-01-01 00:00:00";
         $campaign->end_date = "2004-10-23 07:23:47";
-        $campaign->status = "seding";
+        $campaign->status = "sending";
         $campaign->account_id = $account->id;
         $campaign->group_id = $group->id;
         $campaign->message_id = $message->id;
@@ -36,7 +36,7 @@ class CampaignTest extends BaseTest
             "repeat":"never",
             "start_date":"2000-01-01 00:00:00",
             "end_date": "2004-10-23 07:23:47",
-            "status":"seding",
+            "status":"sending",
             "account_id": "$account->id",
             "group_id": "$group->id",
             "message_id": "$message->id",
@@ -54,8 +54,10 @@ class CampaignTest extends BaseTest
     public function testListCampaign(): void
     {
         $this->expectException(ServerException::class);
-        $this->mockClient->expects(self::once())->method('performHttpRequest')->with("GET", 'campaigns', null, null);
-        $this->client->campaigns->read();
+        $this->mockClient->expects(self::once())->method('performHttpRequest')->with("GET", 'campaigns',
+            ['offset' => 100, 'limit' => 30],
+            null);
+        $this->client->campaigns->getList(['offset' => 100, 'limit' => 30]);
     }
 
     public function testViewCampaign(): void

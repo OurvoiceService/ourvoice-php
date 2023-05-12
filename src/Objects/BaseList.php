@@ -1,6 +1,6 @@
 <?php
 
-namespace Ourvoice\Sdk\Objects;
+namespace Ourvoice\Objects;
 
 /**
  * Class BaseList
@@ -9,10 +9,7 @@ namespace Ourvoice\Sdk\Objects;
  */
 class BaseList extends Base
 {
-    public $limit;
-    public $offset;
-    public $count;
-    public $totalCount;
+    public $meta;
     public $links = [
         'first' => null,
         'previous' => null,
@@ -20,5 +17,5 @@ class BaseList extends Base
         'last' => null,
     ];
 
-    public $items = [];
+    public $data = [];
 }

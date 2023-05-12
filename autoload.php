@@ -4,8 +4,8 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
 } else {
     spl_autoload_register(function ($class) {
-        $prefix = 'Ourvoice\\Sdk\\';
-        $base_dir = __DIR__ . 'src/';
+        $prefix = 'Ourvoice\\';
+        $base_dir = __DIR__ . '/src/';
         $len = strlen($prefix);
         if (strncmp($prefix, $class, $len) !== 0) {
             return;

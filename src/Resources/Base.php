@@ -1,11 +1,11 @@
 <?php
 
-namespace Ourvoice\Sdk\Resources;
+namespace Ourvoice\Resources;
 
-use Ourvoice\Sdk\Common;
-use Ourvoice\Sdk\Common\HttpClient;
-use Ourvoice\Sdk\Exceptions;
-use Ourvoice\Sdk\Objects;
+use Ourvoice\Common\HttpClient;
+use Ourvoice\Common;
+use Ourvoice\Exceptions;
+use Ourvoice\Objects;
 
 /**
  * Class Base
@@ -19,13 +19,13 @@ class Base
      */
     protected $httpClient;
 
-    
+
     protected $resourceName;
 
-    
+
     protected $object;
 
-    
+
     protected $responseObject;
 
     public function __construct(HttpClient $httpClient)
@@ -44,7 +44,7 @@ class Base
         $this->resourceName = $resourceName;
     }
 
-    
+
     public function getObject()
     {
         return $this->object;
@@ -65,53 +65,58 @@ class Base
         $this->responseObject = $responseObject;
     }
 
- 
+
     public function create($object, ?array $query = null)
     {
         $body = json_encode($object, \JSON_THROW_ON_ERROR);
-        [, , $body] = $this->httpClient->performHttpRequest(
+        [$status, , $body] = $this->httpClient->performHttpRequest(
             HttpClient::REQUEST_POST,
             $this->resourceName,
             $query,
             $body
         );
-        return $this->processRequest($body);
+        return $this->processRequest($status, $body);
     }
 
 
-    public function processRequest(?string $body)
+    public function processRequest(?string $status, ?string $body)
     {
-        if ($body === null) {
+        if ($body === null && $status != '204' ) {
             throw new Exceptions\ServerException('Got an invalid JSON response from the server.');
         }
+        else {
+            try {
+                $body = json_decode($body, null, 512, \JSON_THROW_ON_ERROR);
+                switch ($status){
+                    case '201':
+                    case '200':
+                    case '204':
+                        if ($this->responseObject) {
+                            return $this->responseObject->loadFromStdclass($body);
+                        }
 
-        try {
-            $body = json_decode($body, null, 512, \JSON_THROW_ON_ERROR);
-        } catch (\JsonException $e) {
-            throw new Exceptions\ServerException('Got an invalid JSON response from the server.');
-        }
+                        if (is_array($body)) {
+                            $parsed = [];
+                            foreach ($body as $b) {
+                                $parsed[] = $this->object->loadFromStdclass($body);
+                            }
+                            return $parsed;
+                        }
 
-        if (!empty($body->errors)) {
-            $responseError = new Common\ResponseError($body);
-            throw new Exceptions\RequestException($responseError->getErrorString());
-        }
-
-        if ($this->responseObject) {
-            return $this->responseObject->loadFromStdclass($body);
-        }
-        
-        if (is_array($body)) {
-            $parsed = [];
-            foreach ($body as $b) {
-                $parsed[] = $this->object->loadFromStdclass($b);
+                        return $this->object->loadFromStdclass($body);
+                        break;
+                    default:
+                        $responseError = new Common\ResponseError($status, $body->data);
+                        throw new Exceptions\RequestException($responseError->getErrorString());
+                        break;
+                }
+            } catch (\JsonException $e) {
+                throw new Exceptions\ServerException('Got an invalid JSON response from the server.');
             }
-            return $parsed;
         }
-
-        return $this->object->loadFromStdclass($body);
     }
 
-   
+
     public function getList(?array $parameters = [])
     {
         [$status, , $body] = $this->httpClient->performHttpRequest(
@@ -123,43 +128,43 @@ class Base
         if ($status === 200) {
             $body = json_decode($body, null, 512, \JSON_THROW_ON_ERROR);
 
-            $items = $body->items;
-            unset($body->items);
+            $data = $body->data;
+            unset($body->data);
 
             $baseList = new Objects\BaseList();
             $baseList->loadFromArray($body);
 
             $objectName = $this->object;
 
-            $baseList->items = [];
+            $baseList->data = [];
 
-            if ($items === null) {
+            if ($data === null) {
                 return $baseList;
             }
 
-            foreach ($items as $item) {
-                
+            foreach ($data as $item) {
+
                 $object = new $objectName($this->httpClient);
 
                 $message = $object->loadFromArray($item);
-                $baseList->items[] = $message;
+                $baseList->data[] = $message;
             }
 
             return $baseList;
         }
 
-        return $this->processRequest($body);
+        return $this->processRequest($status, $body);
     }
 
-   
+
     public function read($id = null)
     {
         $resourceName = $this->resourceName . (($id) ? '/' . $id : null);
-        [, , $body] = $this->httpClient->performHttpRequest(HttpClient::REQUEST_GET, $resourceName);
-        return $this->processRequest($body);
+        [$status, , $body] = $this->httpClient->performHttpRequest(HttpClient::REQUEST_GET, $resourceName);
+        return $this->processRequest($status, $body);
     }
 
-  
+
     public function delete($id)
     {
         $resourceName = $this->resourceName . '/' . $id;
@@ -169,10 +174,10 @@ class Base
             return true;
         }
 
-        return $this->processRequest($body);
+        return $this->processRequest($status, $body);
     }
 
-    
+
     public function update($object, $id)
     {
         $objVars = get_object_vars($object);
@@ -186,13 +191,13 @@ class Base
         $resourceName = $this->resourceName . ($id ? '/' . $id : null);
         $body = json_encode($body, \JSON_THROW_ON_ERROR);
 
-        [, , $body] = $this->httpClient->performHttpRequest(
+        [$status, , $body] = $this->httpClient->performHttpRequest(
             HttpClient::REQUEST_PUT,
             $resourceName,
             false,
             $body
         );
-        return $this->processRequest($body);
+        return $this->processRequest($status, $body);
     }
 
     public function getHttpClient(): HttpClient

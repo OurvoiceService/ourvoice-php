@@ -1,10 +1,9 @@
 <?php
 
-namespace Ourvoice\Sdk\Common;
+namespace Ourvoice\Common;
 
 use InvalidArgumentException;
-use Ourvoice\Sdk\Common;
-use Ourvoice\Sdk\Exceptions;
+use Ourvoice\Exceptions;
 
 /**
  * Class HttpClient
@@ -21,6 +20,8 @@ class HttpClient
 
     public const HTTP_NO_CONTENT = 204;
 
+    public const HTTP_SUCCESS = 201 || 200;
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class HttpClient
     protected $userAgent = [];
 
     /**
-     * @var Common\Authentication
+     * @var Authentication
      */
     protected $authentication;
 
@@ -92,7 +93,7 @@ class HttpClient
         $this->userAgent[] = $userAgent;
     }
 
-    public function setAuthentication(Common\Authentication $authentication): void
+    public function setAuthentication(Authentication $authentication): void
     {
         $this->authentication = $authentication;
     }
@@ -121,11 +122,11 @@ class HttpClient
         }
 
         $headers = [
-            'User-agent: ' . implode(' ', $this->userAgent),
+            'User-Agent: ' . implode(' ', $this->userAgent),
             'Accept: application/json',
             'Content-Type: application/json',
             'Accept-Charset: utf-8',
-            sprintf('Authorization: AccessKey %s', $this->authentication->accessKey),
+            sprintf('Authorization: Bearer %s', $this->authentication->accessToken),
         ];
 
         $headers = array_merge($headers, $this->headers);

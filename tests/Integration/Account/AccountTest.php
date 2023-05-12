@@ -2,10 +2,10 @@
 
 namespace Tests\Integration\Account;
 
-use Ourvoice\Sdk\Exceptions\ServerException;
+use Ourvoice\Exceptions\ServerException;
 use Tests\Integration\BaseTest;
-use  Ourvoice\Sdk\Objects\User;
-use  Ourvoice\Sdk\Objects\Account;
+use  Ourvoice\Objects\User;
+use  Ourvoice\Objects\Account;
 
 class AccountTest extends BaseTest
 {
@@ -30,14 +30,16 @@ class AccountTest extends BaseTest
         }',
         ]);
         
-        $this->client->accounts->create($account);
+        $this->client->account->create($account);
     }
 
     public function testListAccount(): void
     {
         $this->expectException(ServerException::class);
-        $this->mockClient->expects(self::once())->method('performHttpRequest')->with("GET", 'accounts', null, null);
-        $this->client->accounts->read();
+        $this->mockClient->expects(self::once())->method('performHttpRequest')->with("GET",
+            'accounts', [],
+            null);
+        $this->client->account->getList();
     }
 
     public function testViewAccount(): void
@@ -49,7 +51,7 @@ class AccountTest extends BaseTest
             null,
             null
         );
-        $this->client->accounts->read("account_id");
+        $this->client->account->read("account_id");
     }
 
     public function testUpdateAccount(): void
@@ -64,7 +66,7 @@ class AccountTest extends BaseTest
 
         $account = new Account();
         $account->status = "sending" ;
-        $this->client->accounts->update($account, 'account_id');
+        $this->client->account->update($account, 'account_id');
 
     }
 
@@ -77,6 +79,6 @@ class AccountTest extends BaseTest
             null,
             null
         );
-        $this->client->accounts->delete("account_id");
+        $this->client->account->delete("account_id");
     }
 }
