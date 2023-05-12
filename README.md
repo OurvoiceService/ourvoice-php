@@ -26,7 +26,7 @@ When you do not use Composer. You can git checkout or download [this repository]
 Usage
 -----
 
-Here is a quick breakdown on how it works. First, you need to set up a **MessageBird\Client**. Be sure to replace **YOUR_ACCESS_KEY** with something real.
+Here is a quick breakdown on how it works. First, you need to set up a **Ourvoice\Client**. Be sure to replace **YOUR_ACCESS_KEY** with something real.
 
 ```php
 
