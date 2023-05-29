@@ -37,7 +37,7 @@ $ourvoice = new \Ourvoice\Client('YOUR_API_KEY');
 That's easy enough. Now we can query the server for information. Lets use getting your campaigns overview as an example:
 
 ```php
-// Get your balance
+// Get your campaigns list
 $myCampaigns = $ourvoice->campaigns->getList();
 ```
 
