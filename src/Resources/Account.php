@@ -3,6 +3,7 @@
 namespace Ourvoice\Resources;
 
 use Ourvoice\Common;
+use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
 /**
@@ -18,5 +19,18 @@ class Account extends Base
         $this->setResourceName('accounts');
 
         parent::__construct($httpClient);
+    }
+    public function getAccountBalance() {
+        $resourceName =  'current/balance/';
+
+        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
+            Common\HttpClient::REQUEST_GET,
+            $resourceName,
+            false
+        );
+        if ($responseStatus == HttpClient::HTTP_SUCCESS) {
+            $response = json_decode($responseBody, null, 512, \JSON_THROW_ON_ERROR);
+            return $response->data->balance;
+        }
     }
 }
