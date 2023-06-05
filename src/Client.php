@@ -11,7 +11,7 @@ use Ourvoice\Common\HttpClient;
  */
 class Client
 {
-    public const ENDPOINT = 'https://staging.getourvoice.com/api/v1';
+    public const ENDPOINT = 'https://api.getourvoice.com/v1';
 
     const CLIENT_VERSION = '1.0.0';
 
