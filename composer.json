@@ -1,5 +1,5 @@
 {
-    "name": "ourvoice-php",
+    "name": "ourvoice/ourvoice-php",
     "description": "Ourvoice Api REST API client for php",
     "type": "library",
     "version": "1.0.0",
