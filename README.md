@@ -20,7 +20,7 @@ Installation
 
 #### Manual installation
 
-When you do not use Composer. You can git checkout or download [this repository](https://github.com/shadonet/ourvoice-php) and include the Ourvoice API client manually.
+When you do not use Composer. You can git checkout or download [this repository](https://github.com/OurvoiceService/ourvoice-php) and include the Ourvoice API client manually.
 
 
 Usage
