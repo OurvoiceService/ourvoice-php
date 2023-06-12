@@ -16,7 +16,7 @@ Installation
 #### Composer installation
 
 - [Download composer](https://getcomposer.org/doc/00-intro.md#installation-nix)
-- Run `composer require ourvoice/php`.
+- Run `composer require ourvoice/ourvoice-php`.
 
 #### Manual installation
 
@@ -37,7 +37,7 @@ $ourvoice = new \Ourvoice\Client('YOUR_API_KEY');
 That's easy enough. Now we can query the server for information. Lets use getting your campaigns overview as an example:
 
 ```php
-// Get your balance
+// Get your campaigns
 $myCampaigns = $ourvoice->campaigns->getList();
 ```
 
