@@ -1,8 +1,8 @@
 {
-    "name": "shadonet/ourvoice-php",
+    "name": "ourvoice/ourvoice-php",
     "description": "Ourvoice Api REST API client for php",
     "type": "library",
-    "version": "1.0.0-dev",
+    "version": "1.0.0",
     "license": "MIT",
     "require": {
         "php": ">=7.4",
@@ -15,7 +15,7 @@
     },
     "authors": [
         {
-            "name": "TIC ABC"
+            "name": "Ourvoice"
         }
     ],
     "autoload-dev": {
