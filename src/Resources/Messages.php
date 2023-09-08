@@ -19,4 +19,18 @@ class Messages extends Base
 
         parent::__construct($httpClient);
     }
+    
+    public function getStats() {
+        $resourceName =  'stats/sms/';
+
+        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
+            Common\HttpClient::REQUEST_GET,
+            $resourceName,
+            false
+        );
+        if ($responseStatus == HttpClient::HTTP_SUCCESS) {
+            $response = json_decode($responseBody, null, 512, \JSON_THROW_ON_ERROR);
+            return $response->data;
+        }
+    }
 }
