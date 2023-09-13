@@ -21,10 +21,11 @@ class Messages extends Base
         parent::__construct($httpClient);
     }
 
-    public function getStats() {
+    public function getStats()
+    {
         $resourceName =  'stats/sms/';
 
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
+        [$responseStatus,, $responseBody] = $this->httpClient->performHttpRequest(
             Common\HttpClient::REQUEST_GET,
             $resourceName,
             false
