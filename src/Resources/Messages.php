@@ -3,6 +3,7 @@
 namespace Ourvoice\Resources;
 
 use Ourvoice\Common;
+use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
 /**
