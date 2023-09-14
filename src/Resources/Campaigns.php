@@ -2,6 +2,7 @@
 
 namespace Ourvoice\Resources;
 
+use InvalidArgumentException;
 use Ourvoice\Common;
 use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
@@ -15,7 +16,7 @@ class Campaigns extends Base
 {
     private $voice;
     private $message;
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Campaign();
         $this->setResourceName('campaigns');
@@ -31,8 +32,8 @@ class Campaigns extends Base
 
         $campaigns = json_encode($campaigns_ids, \JSON_THROW_ON_ERROR);
 
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_DELETE,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_DELETE,
             $this->resourceName,
             false,
             $campaigns
@@ -45,8 +46,8 @@ class Campaigns extends Base
     public function getCampaignVoice(string $campaign_id) {
         $resourceName = $this->resourceName . ('/'.$campaign_id .'/voice/');
 
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_GET,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_GET,
             $resourceName,
             false
         );

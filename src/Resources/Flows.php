@@ -4,6 +4,7 @@ namespace Ourvoice\Resources;
 
 use InvalidArgumentException;
 use Ourvoice\Common;
+use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
 /**
@@ -15,7 +16,7 @@ class Flows extends Base
 {
     private $flowsWithLogsObject;
 
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Flow();
         $this->setResourceName('flows');
@@ -35,12 +36,12 @@ class Flows extends Base
             throw new InvalidArgumentException('No flow id provided.');
         }
         $resourceName = $this->resourceName . ($id ? '/' . $id . '/start' : null);
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_POST,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_POST,
             $resourceName,
             false,
         );
-        if ($responseStatus !== Common\HttpClient::HTTP_SUCCESS) {
+        if ($responseStatus !== HttpClient::HTTP_SUCCESS) {
             return json_decode($responseBody, null, 512, \JSON_THROW_ON_ERROR);
         }
         return $responseBody;
@@ -52,12 +53,12 @@ class Flows extends Base
             throw new InvalidArgumentException('No flow id provided.');
         }
         $resourceName = "flow-reports/".$id;
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_GET,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_GET,
             $resourceName,
             false,
         );
-        if ($responseStatus !== Common\HttpClient::HTTP_SUCCESS) {
+        if ($responseStatus !== HttpClient::HTTP_SUCCESS) {
             return json_decode($responseBody, null, 512, \JSON_THROW_ON_ERROR);
         }
         return $responseBody;

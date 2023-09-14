@@ -2,7 +2,6 @@
 
 namespace Ourvoice\Resources;
 
-use Ourvoice\Common;
 use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
@@ -13,7 +12,7 @@ use Ourvoice\Objects;
  */
 class Account extends Base
 {
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Account();
         $this->setResourceName('accounts');
@@ -23,8 +22,8 @@ class Account extends Base
     public function getAccountBalance() {
         $resourceName =  'current/balance/';
 
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_GET,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_GET,
             $resourceName,
             false
         );

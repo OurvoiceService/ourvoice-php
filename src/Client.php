@@ -75,17 +75,17 @@ class Client
 
     protected $endpoint = self::ENDPOINT;
     /**
-     * @var Common\HttpClient
+     * @var HttpClient
      */
     protected $httpClient;
 
 
 
-    public function __construct(?string $accessKey = null, Common\HttpClient $httpClient = null, array $config = [])
+    public function __construct(?string $accessKey = null, HttpClient $httpClient = null, array $config = [])
     {
         if ($httpClient === null) {
 
-            $this->httpClient = new Common\HttpClient(self::ENDPOINT);
+            $this->httpClient = new HttpClient(self::ENDPOINT);
 
         } else {
 

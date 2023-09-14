@@ -2,7 +2,7 @@
 
 namespace Ourvoice\Resources;
 
-use Ourvoice\Common;
+use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
 /**
@@ -12,19 +12,20 @@ use Ourvoice\Objects;
  */
 class Messages extends Base
 {
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Message();
         $this->setResourceName('messages');
 
         parent::__construct($httpClient);
     }
-    
-    public function getStats() {
+
+    public function getStats()
+    {
         $resourceName =  'stats/sms/';
 
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_GET,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_GET,
             $resourceName,
             false
         );

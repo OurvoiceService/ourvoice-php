@@ -12,17 +12,16 @@ class GroupTest extends BaseTest
 {
     public function testCreateGroup(): void
     {
-       
+
         $account = new Account();
         $group = new Group();
         $group->name = "John";
         $group->description = "Johnhg";
         $group->account_id = $account->id;
-        
+
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "name": "John",
             "description": "Johnhg",
@@ -31,7 +30,7 @@ class GroupTest extends BaseTest
             "updatedDatetime": "2016-04-29T09:42:26+00:00"
         }',
         ]);
-       
+
         $this->client->groups->create($group);
     }
 
@@ -64,9 +63,9 @@ class GroupTest extends BaseTest
             ->expects($this->exactly(1))->method('performHttpRequest')
             ->withConsecutive(
                 ['PUT', 'groups/group_id', null, '{"name":"gagle"}'],
-               
+
             )
-            ->willReturn([200, '', '{}']);
+            ->willReturn([200, '{}']);
 
         $group = new Group();
         $group->name = "gagle" ;

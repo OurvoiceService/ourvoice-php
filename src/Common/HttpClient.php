@@ -171,7 +171,7 @@ class HttpClient
 
         curl_close($curl);
 
-        return [$responseStatus, $responseHeader, $responseBody];
+        return [$responseStatus, $responseBody];
     }
 
     public function getRequestUrl(string $resourceName, $query): string

@@ -23,11 +23,10 @@ class MessageTest extends BaseTest
         $message->status = "seding";
         $message->cost = 0.03;
         $message->account_id = $account->id;
-    
+
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "from": "22961616262",
             "direction":"never",
@@ -68,9 +67,9 @@ class MessageTest extends BaseTest
             ->expects($this->exactly(1))->method('performHttpRequest')
             ->withConsecutive(
                 ['PUT', 'messages/message_id', null, '{"direction":"archived"}'],
-               
+
             )
-            ->willReturn([200, '', '{}']);
+            ->willReturn([200, '{}']);
 
         $message = new Message();
         $message->direction = "archived" ;
@@ -88,5 +87,11 @@ class MessageTest extends BaseTest
             null
         );
         $this->client->messages->delete("message_id");
+    }
+
+    public function testGetMessagesStats(){
+        $this->mockClient->expects(self::once())->method('performHttpRequest')->with("GET",
+            'stats/sms/', null, null);
+        $this->client->messages->getStats();
     }
 }

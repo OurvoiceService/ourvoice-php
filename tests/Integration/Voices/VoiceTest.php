@@ -16,7 +16,6 @@ class VoiceTest extends BaseTest
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "audio_url" : "https://ourvoice-bucket.mp3",
             "direction":  "outgoing",

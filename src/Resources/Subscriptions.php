@@ -2,7 +2,7 @@
 
 namespace Ourvoice\Resources;
 
-use Ourvoice\Common;
+use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
 /**
@@ -12,7 +12,7 @@ use Ourvoice\Objects;
  */
 class Subscriptions extends Base
 {
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Subscription();
         $this->setResourceName('subscriptions');

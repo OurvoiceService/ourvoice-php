@@ -30,7 +30,6 @@ class CampaignTest extends BaseTest
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "type": "sms",
             "repeat":"never",
@@ -47,8 +46,8 @@ class CampaignTest extends BaseTest
         ]);
         $this->client->campaigns->create($campaign);
     }
-        
-        
+
+
 
 
     public function testListCampaign(): void
@@ -72,16 +71,16 @@ class CampaignTest extends BaseTest
         $this->client->campaigns->read("campaign_id");
     }
 
-    
+
     public function testUpdateCampaign(): void
     {
         $this->mockClient
             ->expects($this->exactly(1))->method('performHttpRequest')
             ->withConsecutive(
                 ['PUT', 'campaigns/campaign_id', null, '{"type":"voice"}'],
-               
+
             )
-            ->willReturn([200, '', '{}']);
+            ->willReturn([200, '{}']);
 
         $campaign = new Campaign();
         $campaign->type = "voice" ;
