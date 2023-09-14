@@ -27,7 +27,6 @@ class MessageTest extends BaseTest
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "from": "22961616262",
             "direction":"never",
@@ -70,7 +69,7 @@ class MessageTest extends BaseTest
                 ['PUT', 'messages/message_id', null, '{"direction":"archived"}'],
 
             )
-            ->willReturn([200, '', '{}']);
+            ->willReturn([200, '{}']);
 
         $message = new Message();
         $message->direction = "archived" ;

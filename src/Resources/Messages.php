@@ -13,7 +13,7 @@ use Ourvoice\Objects;
  */
 class Messages extends Base
 {
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Message();
         $this->setResourceName('messages');
@@ -25,8 +25,8 @@ class Messages extends Base
     {
         $resourceName =  'stats/sms/';
 
-        [$responseStatus,, $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_GET,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_GET,
             $resourceName,
             false
         );

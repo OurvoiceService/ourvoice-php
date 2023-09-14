@@ -13,18 +13,17 @@ class MediaTest extends BaseTest
 
     public function testCreateMedia(): void
     {
-       
+
         $account = new Account();
         $media = new Media();
         $media->name = "John";
         $media->media_url = "https://stackoverflow.com/";
         $media->type = "voice";
         $media->account_id = $account->id;
-        
+
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "name": "John",
             "media_url": "https://stackoverflow.com/",
@@ -34,7 +33,7 @@ class MediaTest extends BaseTest
             "updatedDatetime": "2016-04-29T09:42:26+00:00"
         }',
         ]);
-       
+
         $this->client->medias->create($media);
     }
 
@@ -66,9 +65,9 @@ class MediaTest extends BaseTest
             ->expects($this->exactly(1))->method('performHttpRequest')
             ->withConsecutive(
                 ['PUT', 'medias/media_id', null, '{"name":"archived"}'],
-               
+
             )
-            ->willReturn([200, '', '{}']);
+            ->willReturn([200, '{}']);
 
         $media = new Media();
         $media->name = "archived" ;

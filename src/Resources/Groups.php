@@ -3,7 +3,6 @@
 namespace Ourvoice\Resources;
 
 use InvalidArgumentException;
-use Ourvoice\Common;
 use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
@@ -19,7 +18,7 @@ class Groups extends Base
      */
     private $contactsObject;
 
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Group();
         $this->setResourceName('groups');
@@ -49,13 +48,13 @@ class Groups extends Base
 
         $resourceName = $this->resourceName . ($id ? '/' . $id . '/contacts' : null);
         $contacts = json_encode($contacts, \JSON_THROW_ON_ERROR);
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_PUT,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_PUT,
             $resourceName,
             false,
             $contacts
         );
-        if ($responseStatus !== Common\HttpClient::HTTP_NO_CONTENT) {
+        if ($responseStatus !== HttpClient::HTTP_NO_CONTENT) {
             return json_decode($responseBody, null, 512, \JSON_THROW_ON_ERROR);
         }
     }
@@ -69,8 +68,8 @@ class Groups extends Base
             throw new InvalidArgumentException('No group id provided.');
         }
         $resourceName = $this->resourceName . ('/' . $group_id . '/contacts/' . $contact_id);
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_DELETE,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_DELETE,
             $resourceName,
             false,
         );
@@ -86,8 +85,8 @@ class Groups extends Base
         }
         $contacts = json_encode($contact_ids, \JSON_THROW_ON_ERROR);
         $resourceName = $this->resourceName . ('/'.$group_id .'/contacts/');
-        [$responseStatus, , $responseBody] = $this->httpClient->performHttpRequest(
-            Common\HttpClient::REQUEST_DELETE,
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_DELETE,
             $resourceName,
             false,
             $contacts

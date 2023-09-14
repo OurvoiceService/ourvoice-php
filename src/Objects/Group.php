@@ -11,7 +11,7 @@ use stdClass;
  */
 class Group extends Base
 {
-   
+
     public $name;
 
     public $description;
@@ -36,6 +36,4 @@ class Group extends Base
     {
         return $this->contacts;
     }
-
-    
 }

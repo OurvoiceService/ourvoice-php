@@ -24,7 +24,6 @@ class ContactTest extends BaseTest
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "first_name": "John",
             "last_name": "Doe",
@@ -37,7 +36,7 @@ class ContactTest extends BaseTest
             
         }',
         ]);
-        
+
         $this->client->contacts->create($contact);
     }
 
@@ -72,9 +71,9 @@ class ContactTest extends BaseTest
             ->expects($this->exactly(1))->method('performHttpRequest')
             ->withConsecutive(
                 ['PUT', 'contacts/contact_id', null, '{"first_name":"gagle"}'],
-               
+
             )
-            ->willReturn([200, '', '{}']);
+            ->willReturn([200, '{}']);
 
         $contact = new Contact();
         $contact->first_name = "gagle" ;
@@ -95,7 +94,7 @@ class ContactTest extends BaseTest
         $this->client->contacts->delete("contact_id");
     }
 
-    
 
-    
+
+
 }

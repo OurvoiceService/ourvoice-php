@@ -3,6 +3,7 @@
 namespace Ourvoice\Resources;
 
 use Ourvoice\Common;
+use Ourvoice\Common\HttpClient;
 use Ourvoice\Objects;
 
 /**
@@ -12,7 +13,7 @@ use Ourvoice\Objects;
  */
 class Webhooks extends Base
 {
-    public function __construct(Common\HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient)
     {
         $this->object = new Objects\Webhook();
         $this->setResourceName('webhooks');

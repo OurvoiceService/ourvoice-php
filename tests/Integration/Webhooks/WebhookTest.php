@@ -17,11 +17,10 @@ class WebhookTest extends BaseTest
     public function testCreateWebhook(): void
     {
         $webhook = new Webhook();
-        $webhook->url = 'hhtp://mywebhook.com';
+        $webhook->url = 'http://mywebhook.com';
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "url" : "hhtp://mywebhook.com",
             "createdDatetime": "2016-04-29T09:42:26+00:00",

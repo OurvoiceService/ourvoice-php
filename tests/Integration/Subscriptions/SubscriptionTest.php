@@ -23,7 +23,6 @@ class SubscriptionTest extends BaseTest
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "status" : "is_active",
             "createdDatetime": "2016-04-29T09:42:26+00:00",

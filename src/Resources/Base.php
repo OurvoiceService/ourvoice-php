@@ -69,7 +69,7 @@ class Base
     public function create($object, ?array $query = null)
     {
         $body = json_encode($object, \JSON_THROW_ON_ERROR);
-        [$status, , $body] = $this->httpClient->performHttpRequest(
+        [$status, $body] = $this->httpClient->performHttpRequest(
             HttpClient::REQUEST_POST,
             $this->resourceName,
             $query,
@@ -119,7 +119,7 @@ class Base
 
     public function getList(?array $parameters = [])
     {
-        [$status, , $body] = $this->httpClient->performHttpRequest(
+        [$status, $body] = $this->httpClient->performHttpRequest(
             HttpClient::REQUEST_GET,
             $this->resourceName,
             $parameters
@@ -160,7 +160,7 @@ class Base
     public function read($id = null)
     {
         $resourceName = $this->resourceName . (($id) ? '/' . $id : null);
-        [$status, , $body] = $this->httpClient->performHttpRequest(HttpClient::REQUEST_GET, $resourceName);
+        [$status, $body] = $this->httpClient->performHttpRequest(HttpClient::REQUEST_GET, $resourceName);
         return $this->processRequest($status, $body);
     }
 
@@ -168,7 +168,7 @@ class Base
     public function delete($id)
     {
         $resourceName = $this->resourceName . '/' . $id;
-        [$status, , $body] = $this->httpClient->performHttpRequest(HttpClient::REQUEST_DELETE, $resourceName);
+        [$status, $body] = $this->httpClient->performHttpRequest(HttpClient::REQUEST_DELETE, $resourceName);
 
         if ($status === HttpClient::HTTP_NO_CONTENT) {
             return true;
@@ -191,7 +191,7 @@ class Base
         $resourceName = $this->resourceName . ($id ? '/' . $id : null);
         $body = json_encode($body, \JSON_THROW_ON_ERROR);
 
-        [$status, , $body] = $this->httpClient->performHttpRequest(
+        [$status, $body] = $this->httpClient->performHttpRequest(
             HttpClient::REQUEST_PUT,
             $resourceName,
             false,

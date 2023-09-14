@@ -19,7 +19,6 @@ class AccountTest extends BaseTest
 
         $this->mockClient->expects(self::once())->method('performHttpRequest')->willReturn([
             200,
-            '',
             '{
             "status":"active",
             "type":"test",
@@ -29,7 +28,7 @@ class AccountTest extends BaseTest
             
         }',
         ]);
-        
+
         $this->client->account->create($account);
     }
 
@@ -60,9 +59,9 @@ class AccountTest extends BaseTest
             ->expects($this->exactly(1))->method('performHttpRequest')
             ->withConsecutive(
                 ['PUT', 'accounts/account_id', null, '{"status":"sending"}'],
-               
+
             )
-            ->willReturn([200, '', '{}']);
+            ->willReturn([200, '{}']);
 
         $account = new Account();
         $account->status = "sending" ;
