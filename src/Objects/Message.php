@@ -23,5 +23,23 @@ class Message extends Base
 
     public $cost;
 
+    public $currency;
+
+    public $contact_id;
+
+    public $campaign_id;
+
+    public $flow_id;
+
+    public $sender_id;
+
+    public $sender_name;
+
+    public $otp_id;
+
+    public $created_at;
+
+    public $updated_at;
+
     public $id;
 }

@@ -37,6 +37,47 @@ That's easy enough. Now we can query the server for information. Lets use gettin
 $myCampaigns = $ourvoice->campaigns->getList();
 ```
 
+## Available resources
+
+`$ourvoice->account`, `$ourvoice->apps`, `$ourvoice->campaigns`, `$ourvoice->contacts`,
+`$ourvoice->flows`, `$ourvoice->groups`, `$ourvoice->medias`, `$ourvoice->messages`,
+`$ourvoice->numbers`, `$ourvoice->otp`, `$ourvoice->steps`, `$ourvoice->subscriptions`,
+`$ourvoice->voices`, `$ourvoice->webhooks`, `$ourvoice->whatsappSessions`,
+`$ourvoice->whatsappMessages`.
+
+A few examples beyond basic CRUD:
+
+```php
+// Send a voice call
+$ourvoice->voices->sendCall([
+    'to' => ['22912121212'],
+    'audio_url' => 'https://example.com/audio.mp3',
+    'phone_number' => '22900000000',
+]);
+
+// Send and verify an OTP code
+$ourvoice->otp->send(['app_name' => 'my_app', 'send_to' => '22912121212']);
+$ourvoice->otp->verify(['app_name' => 'my_app', 'send_to' => '22912121212', 'code' => 123456]);
+
+// Check and top up your account balance
+$balance = $ourvoice->account->getAccountBalance();
+$ourvoice->account->topUpBalance([
+    'amount' => 1000,
+    'payment_id' => 'payment_id',
+    'payment_method' => 'card',
+    'status' => 'success',
+]);
+
+// Create a WhatsApp session and send a message
+$session = $ourvoice->whatsappSessions->create();
+$ourvoice->whatsappMessages->send([
+    'whatsapp_session_id' => 'session_id',
+    'to_number' => ['22912121212'],
+    'type' => 'text',
+    'content' => 'Hello!',
+]);
+```
+
 ## Documentation
 
 Complete documentation, instructions, and examples are available at:

@@ -80,4 +80,26 @@ class AccountTest extends BaseTest
         );
         $this->client->account->delete("account_id");
     }
+
+    public function testTopUpBalance(): void
+    {
+        $params = [
+            'amount' => 1000,
+            'payment_id' => 'payment_id',
+            'payment_method' => 'card',
+            'status' => 'success',
+        ];
+
+        $this->mockClient
+            ->expects($this->once())->method('performHttpRequest')
+            ->with('POST', 'transactions/topUpBalance', null, json_encode($params, \JSON_THROW_ON_ERROR))
+            ->willReturn([200, '{
+                "success": true,
+                "message": "Balance updated",
+                "transaction": {"id": "transaction_id", "amount": 1000, "status": "success"}
+            }']);
+
+        $result = $this->client->account->topUpBalance($params);
+        self::assertTrue($result->success);
+    }
 }

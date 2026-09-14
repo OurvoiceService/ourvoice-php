@@ -59,6 +59,26 @@ class Groups extends Base
         }
     }
 
+    public function addContactToGroup(?string $group_id, ?string $contact_id)
+    {
+        if ($group_id === null) {
+            throw new InvalidArgumentException('No group id provided.');
+        }
+        if ($contact_id === null) {
+            throw new InvalidArgumentException('No contact id provided.');
+        }
+        $resourceName = $this->resourceName . '/' . $group_id . '/contacts/' . $contact_id;
+        [$responseStatus, $responseBody] = $this->httpClient->performHttpRequest(
+            HttpClient::REQUEST_PUT,
+            $resourceName,
+            false,
+        );
+        if ($responseStatus === HttpClient::HTTP_NO_CONTENT) {
+            return true;
+        }
+        return json_decode($responseBody, null, 512, \JSON_THROW_ON_ERROR);
+    }
+
     public function removeContactFromGroup(?string $group_id, ?string $contact_id)
     {
         if ($contact_id === null) {

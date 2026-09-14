@@ -23,6 +23,10 @@ class BaseTest extends TestCase
     {
         $ourvoice = new Client('YOUR_ACCESS_KEY');
         self::assertInstanceOf(Account::class, $ourvoice->account);
+        self::assertInstanceOf(\Ourvoice\Resources\Apps::class, $ourvoice->apps);
+        self::assertInstanceOf(\Ourvoice\Resources\Otp::class, $ourvoice->otp);
+        self::assertInstanceOf(\Ourvoice\Resources\WhatsappSessions::class, $ourvoice->whatsappSessions);
+        self::assertInstanceOf(\Ourvoice\Resources\WhatsappMessages::class, $ourvoice->whatsappMessages);
     }
 
     public function testHttpClientMock(): void
