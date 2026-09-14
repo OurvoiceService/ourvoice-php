@@ -13,7 +13,7 @@ class Client
 {
     public const ENDPOINT = 'https://api.getourvoice.com/v1';
 
-    const CLIENT_VERSION = '1.0.0';
+    const CLIENT_VERSION = '1.1.0';
 
     /**
      * @var Resources\Contacts
@@ -27,6 +27,26 @@ class Client
      * @var Resources\Account
      */
     public $account;
+
+    /**
+     * @var Resources\Apps
+     */
+    public $apps;
+
+    /**
+     * @var Resources\Otp
+     */
+    public $otp;
+
+    /**
+     * @var Resources\WhatsappSessions
+     */
+    public $whatsappSessions;
+
+    /**
+     * @var Resources\WhatsappMessages
+     */
+    public $whatsappMessages;
 
     /**
      * @var Resources\Flows
@@ -100,6 +120,7 @@ class Client
             $this->setAccessKey($accessKey);
         }
         $this->account = new Resources\Account($this->httpClient);
+        $this->apps = new Resources\Apps($this->httpClient);
         $this->campaigns = new Resources\Campaigns($this->httpClient);
         $this->contacts = new Resources\Contacts($this->httpClient);
        $this->flows = new Resources\Flows($this->httpClient);
@@ -107,10 +128,13 @@ class Client
         $this->medias = new Resources\Medias($this->httpClient);
         $this->messages = new Resources\Messages($this->httpClient);
         $this->numbers = new Resources\Numbers($this->httpClient);
+        $this->otp = new Resources\Otp($this->httpClient);
         $this->steps = new Resources\Steps($this->httpClient);
         $this->subscriptions = new Resources\Subscriptions($this->httpClient);
         $this->voices = new Resources\Voices($this->httpClient);
         $this->webhooks = new Resources\Webhooks($this->httpClient);
+        $this->whatsappSessions = new Resources\WhatsappSessions($this->httpClient);
+        $this->whatsappMessages = new Resources\WhatsappMessages($this->httpClient);
     }
 
     private function getPhpVersion(): string

@@ -9,14 +9,19 @@ namespace Ourvoice\Objects;
  */
 class Campaign extends Base
 {
-   
+
     public $account_id;
 
     public $name;
 
+    public $type;
+
+    /**
+     * @deprecated use $group_ids
+     */
     public $group_id;
 
-    public $type;
+    public $group_ids;
 
     public $repeat;
 
@@ -26,5 +31,22 @@ class Campaign extends Base
 
     public $status;
 
+    public $audio_url;
+
+    public $sender_id;
+
+    public $sender_name;
+
+    public $whatsapp_session_id;
+
+    public $whatsapp_message_type;
+
+    public $media_url;
+
     protected $id;
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 }

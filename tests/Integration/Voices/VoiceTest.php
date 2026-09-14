@@ -63,4 +63,34 @@ class VoiceTest extends BaseTest
         );
         $this->client->voices->delete("voice_id");
     }
+
+    public function testSendCall(): void
+    {
+        $params = ['to' => ['22912121212'], 'audio_url' => 'https://ourvoice-bucket.mp3', 'phone_number' => '22900000000'];
+
+        $this->mockClient
+            ->expects($this->once())->method('performHttpRequest')
+            ->with('POST', 'call', null, json_encode($params, \JSON_THROW_ON_ERROR))
+            ->willReturn([200, '{
+                "audio_url": "https://ourvoice-bucket.mp3",
+                "status": "queued"
+            }']);
+
+        $this->client->voices->sendCall($params);
+    }
+
+    public function testSendBulkCall(): void
+    {
+        $params = ['to' => ['22912121212', '22912121213'], 'audio_url' => 'https://ourvoice-bucket.mp3'];
+
+        $this->mockClient
+            ->expects($this->once())->method('performHttpRequest')
+            ->with('POST', 'calls', null, json_encode($params, \JSON_THROW_ON_ERROR))
+            ->willReturn([200, '{
+                "audio_url": "https://ourvoice-bucket.mp3",
+                "status": "queued"
+            }']);
+
+        $this->client->voices->sendBulkCall($params);
+    }
 }

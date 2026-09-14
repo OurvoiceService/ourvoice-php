@@ -84,4 +84,15 @@ class GroupTest extends BaseTest
         );
         $this->client->groups->delete("group_id");
     }
+
+    public function testAddContactToGroup(): void
+    {
+        $this->mockClient
+            ->expects($this->once())->method('performHttpRequest')
+            ->with('PUT', 'groups/group_id/contacts/contact_id', false, null)
+            ->willReturn([200, '{"message": "Contact successfully added to group"}']);
+
+        $result = $this->client->groups->addContactToGroup('group_id', 'contact_id');
+        self::assertSame('Contact successfully added to group', $result->message);
+    }
 }
